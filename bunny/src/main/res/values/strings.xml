@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">PaystackUI</string>
+    <string name="visa_logo">Visa logo</string>
+    <string name="card_number">Card number</string>
+    <string name="card_digit_placeholder_text">**** **** **** **** ***</string>
+    <string name="valid_through">Valid through</string>
+    <string name="name_on_card">NAME ON CARD</string>
+    <string name="expiry_date">Expiry date</string>
+    <string name="security_code">Security code</string>
+    <string name="pay_now">Pay</string>
+    <string name="payment_summary_text">You are about to pay a calculated sum of </string>
+    <string name="paystack">Paystack</string>
+    <string name="card_holder">Card holder</string>
+    <string name="total_price">Total price</string>
+    <string name="card_number_hint">CARD NUMBER</string>
+    <string name="valid_through_format">MM/YY</string>
+    <string name="cvv">CVV</string>
+    <string name="cvv_hint">***</string>
+    <string name="save_card_data">Save card data for future payment</string>
+    <string name="cvv_helper_text">A three-digit code on your debit card that you can find on the back of your card.</string>
+    <string name="cvv_helper_header">What is CVV?</string>
+    <string name="ok">OK</string>
+    <string name="card_holder_placeholder">No Card Name</string>
+    <string name="scan_your_card">Scan your card</string>
+    <string name="scan_card_long_text">Please ensure the card number is visible and you\'ve enough lighting.</string>
+    <string name="center_card">Place card within box</string>
+</resources>

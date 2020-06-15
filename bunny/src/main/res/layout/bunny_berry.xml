@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/darker_white"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/space_16"
+            android:paddingTop="@dimen/space_16"
+            android:paddingEnd="@dimen/space_16">
+
+            <LinearLayout
+                android:id="@+id/amount_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/total_price"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$2,280.00"
+                    android:textColor="#C8E91E63"
+                    android:textSize="@dimen/price_text_large"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/card_height"
+                android:layout_below="@id/amount_card"
+                android:layout_marginTop="@dimen/space_12"
+                android:layout_marginBottom="@dimen/space_16"
+                android:maxHeight="@dimen/card_height"
+                app:cardCornerRadius="@dimen/card_corner_radius"
+                app:cardElevation="@dimen/card_elevation">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/card_bg"
+                    android:paddingStart="@dimen/space_16"
+                    android:paddingEnd="@dimen/space_16"
+                    android:paddingBottom="@dimen/space_16">
+
+                    <ImageView
+                        android:id="@+id/card_type_background"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:alpha="0.05"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_paystack_logo"
+                        android:tint="@color/white" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="@string/paystack"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/card_digit_text_size" />
+
+                        <ImageView
+                            android:id="@+id/card_type_image"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:contentDescription="@string/visa_logo"
+                            android:padding="@dimen/space_16"
+                            android:src="@drawable/ic_paystack_logo" />
+
+                    </RelativeLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:letterSpacing="0.1"
+                            android:text="@string/card_number"
+                            android:textAllCaps="true"
+                            android:textColor="@color/faint_white" />
+
+                        <TextView
+                            android:id="@+id/card_digit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:letterSpacing="0.2"
+                            android:text="@string/card_digit_placeholder_text"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/card_digit_text_size" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_toStartOf="@+id/card_expiry_layout"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:letterSpacing="0.1"
+                            android:paddingBottom="4dp"
+                            android:text="@string/card_holder"
+                            android:textAllCaps="true"
+                            android:textColor="@color/faint_white"
+                            android:textSize="@dimen/card_text_small" />
+
+                        <TextView
+                            android:id="@+id/card_name_holder"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:letterSpacing="0.2"
+                            android:maxLines="1"
+                            android:text="@string/card_holder_placeholder"
+                            android:textAllCaps="true"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/card_text_medium" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/card_expiry_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:letterSpacing="0.1"
+                            android:paddingBottom="4dp"
+                            android:text="@string/valid_through"
+                            android:textAllCaps="true"
+                            android:textColor="@color/faint_white"
+                            android:textSize="@dimen/card_text_small" />
+
+                        <TextView
+                            android:id="@+id/card_expiry"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:letterSpacing="0.2"
+                            android:text="MM/YY"
+                            android:textAllCaps="true"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/card_text_medium" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <ScrollView
+                android:id="@+id/scroll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/card"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/space_16">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/space_8"
+                        android:text="@string/card_number"
+                        android:textAllCaps="false"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/card_number_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:hintEnabled="false">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edit_text_card_number"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/edit_text_bg"
+                            android:drawableStart="@drawable/ic_paystack_logo_input"
+                            android:drawableEnd="@drawable/ic_baseline_camera_alt_24"
+                            android:drawablePadding="@dimen/space_8"
+                            android:gravity="center_vertical"
+                            android:hint="@string/card_number_hint"
+                            android:inputType="number"
+                            android:maxLength="24"
+                            android:padding="@dimen/space_12"
+                            android:textSize="@dimen/edit_text_text_size" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <LinearLayout
+                        android:id="@+id/expiry_and_security_input_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_24"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/space_8"
+                                android:text="@string/valid_through"
+                                android:textStyle="bold" />
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="@dimen/space_4"
+                                app:hintEnabled="false">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/edit_text_expiry_date"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/edit_text_bg"
+                                    android:hint="@string/valid_through_format"
+                                    android:inputType="date"
+                                    android:maxLength="5"
+                                    android:padding="@dimen/space_12"
+                                    android:textSize="@dimen/edit_text_text_size" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/cvv_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/space_8"
+                                android:drawableEnd="@drawable/ic_baseline_help_outline_24"
+                                android:drawablePadding="@dimen/space_4"
+                                android:gravity="center_vertical"
+                                android:text="@string/cvv"
+                                android:textAllCaps="true"
+                                android:textStyle="bold" />
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/space_4"
+                                app:hintEnabled="false">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/edit_text_security_code"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/edit_text_bg"
+                                    android:hint="@string/cvv_hint"
+                                    android:inputType="numberPassword"
+                                    android:maxLength="3"
+                                    android:padding="@dimen/space_12"
+                                    android:textSize="@dimen/edit_text_text_size" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_24"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/space_8"
+                            android:text="@string/card_holder"
+                            android:textStyle="bold" />
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/name_input_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:hintEnabled="false">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/edit_text_name_on_card"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/edit_text_bg"
+                                android:hint="@string/name_on_card"
+                                android:inputType="textPersonName"
+                                android:padding="@dimen/space_12"
+                                android:textAllCaps="true"
+                                android:textSize="@dimen/edit_text_text_size" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_24">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="@string/save_card_data"
+                            android:textStyle="bold" />
+
+                        <Switch
+                            android:id="@+id/save_card_detail_switch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true" />
+
+                    </RelativeLayout>
+
+                    <Button
+                        android:id="@+id/pay_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/space_16"
+                        android:background="@drawable/button_bg"
+                        android:letterSpacing="0.3"
+                        android:text="@string/pay_now"
+                        android:textAllCaps="true"
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </ScrollView>
+
+
+        </RelativeLayout>
+
+        <include layout="@layout/cvv_helper_layout" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</LinearLayout>
