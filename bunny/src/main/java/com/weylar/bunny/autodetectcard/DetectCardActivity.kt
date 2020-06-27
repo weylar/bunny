@@ -156,6 +156,7 @@ class DetectCardActivity : AppCompatActivity() {
             override fun run() {
                 runOnUiThread {
                     center_text.visibility = View.GONE
+                    this.cancel()
                 }
 
             }

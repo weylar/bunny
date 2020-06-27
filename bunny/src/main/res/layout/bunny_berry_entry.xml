@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<ViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/view_flipper"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <TextView
+            android:id="@+id/question"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="false"
+            android:letterSpacing="0.05"
+            android:layout_centerVertical="true"
+            android:layout_margin="@dimen/space_16"
+            android:text="@string/payment_type_question"
+            android:textSize="24sp" />
+
+        <View
+            android:id="@+id/entry_header_underline"
+            android:layout_width="100dp"
+            android:layout_height="1dp"
+            android:layout_below="@+id/question"
+            android:layout_marginStart="@dimen/space_16"
+            android:layout_marginEnd="@dimen/space_16"
+            android:background="@color/primary" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/pay_with_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/space_16"
+                android:background="@drawable/previous_card_item_bg"
+                android:drawableStart="@drawable/ic_credit_card_svgrepo_com"
+                android:drawableEnd="@drawable/ic_baseline_arrow_forward_ios_24"
+                android:drawablePadding="@dimen/space_8"
+                android:gravity="center_vertical"
+                android:padding="@dimen/space_12"
+                android:text="@string/pay_with_card"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/pay_with_bank"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_16"
+                android:layout_marginEnd="@dimen/space_16"
+                android:background="@drawable/previous_card_item_bg"
+                android:drawableStart="@drawable/ic_bank_svgrepo_com"
+                android:drawableEnd="@drawable/ic_baseline_arrow_forward_ios_24"
+                android:drawablePadding="@dimen/space_8"
+                android:gravity="center_vertical"
+                android:padding="@dimen/space_12"
+                android:text="@string/pay_with_bank"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_margin="@dimen/space_16"
+                android:contentDescription="@string/paystack_logo"
+                android:src="@drawable/secured_by_paystack" />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+    <include layout="@layout/bunny_berry_card" />
+
+    <include layout="@layout/bunny_berry_bank" />
+</ViewFlipper>

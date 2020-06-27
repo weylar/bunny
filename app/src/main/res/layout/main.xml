@@ -2,13 +2,25 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
 
     <com.weylar.bunny.PayView
         android:id="@+id/pay_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        app:amount="200.0"
+        app:bunnyTheme="#000000"/>
+
+    <!--    app:amountDescription="@string/amount_description"
+            app:amountColor="@color/colorAccent"
+            app:cardBackground="@drawable/card_bg"
+            app:cardContentColor="@color/white"
+            app:payButtonBackground="@color/black"
+            app:amountColor="@color/black"
+            app:payButtonTextColor="@color/white"-->
+
 
 </LinearLayout>

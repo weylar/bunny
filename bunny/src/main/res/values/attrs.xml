@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PayView">
+        <attr name="payButtonTextColor" format="color"/>
+        <attr name="payButtonText" format="string"/>
+        <attr name="payButtonBackground" format="reference"/>
+        <attr name="amount" format="float"/>
+        <attr name="amountColor" format="color"/>
+        <attr name="amountDescription" format="string"/>
+        <attr name="cardBackground" format="reference"/>
+        <attr name="cardContentColor" format="color"/>
+        <attr name="bunnyTheme" format="color"/>
+    </declare-styleable>
+
+</resources>

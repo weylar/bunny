@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/darker_white">
+
+<LinearLayout
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/space_16">
+
+    <LinearLayout
+        android:id="@+id/amount_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/amount_description_bank_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/amount_description"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/text_view_amount_bank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="$0.0"
+            android:textColor="#C8E91E63"
+            android:textSize="@dimen/price_text_large"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_24"
+        android:layout_marginBottom="@dimen/space_8">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/bank_name"
+            android:textStyle="bold" />
+
+        <TextView
+
+            android:id="@+id/show_saved_banks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/saved_banks"
+            android:padding="@dimen/space_4"
+            android:layout_alignParentEnd="true"
+            android:textStyle="italic" />
+    </RelativeLayout>
+
+
+    <Spinner
+        android:id="@+id/bank_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit_text_bg"
+        android:textSize="@dimen/edit_text_text_size" />
+
+
+    <LinearLayout
+        android:id="@+id/expiry_and_security_input_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_24"
+        android:baselineAligned="false"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/space_8"
+                android:text="@string/account_number_"
+                android:textStyle="bold" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edit_text_account_number_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:hintEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_text_account_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edit_text_bg"
+                    android:gravity="center_vertical"
+                    android:hint="@string/account_number"
+                    android:inputType="number"
+                    android:maxLength="10"
+                    android:padding="@dimen/space_12"
+                    android:textSize="@dimen/edit_text_text_size" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/birthday_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/space_8"
+                android:gravity="center_vertical"
+                android:text="@string/date_of_birth"
+                android:textStyle="bold" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edit_text_dob_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_4"
+                app:hintEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edit_text_dob"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edit_text_bg"
+                    android:hint="@string/_1990_06_02"
+                    android:inputType="date"
+                    android:maxLength="10"
+                    android:padding="@dimen/space_12"
+                    android:textSize="@dimen/edit_text_text_size" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_24">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/save_bank_data"
+            android:textStyle="bold" />
+
+        <Switch
+            android:id="@+id/save_bank_detail_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true" />
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/pay_button_bank"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/space_16"
+        android:layout_marginBottom="@dimen/space_8"
+        android:background="@drawable/button_bg"
+        android:letterSpacing="0.3"
+        android:text="@string/pay"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/pay_button_alternative_bank"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/space_16"
+        android:layout_marginBottom="@dimen/space_8"
+        android:gravity="center_horizontal"
+        android:letterSpacing="0.1"
+        android:text="@string/pay_with_card_question"
+        android:textStyle="italic" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_margin="@dimen/space_16"
+        android:contentDescription="@string/paystack_logo"
+        android:src="@drawable/secured_by_paystack" />
+
+</LinearLayout>
+</ScrollView>

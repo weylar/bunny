@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
 
     <corners android:radius="@dimen/card_corner_radius"/>
 
 
     <gradient
-        android:startColor="#C8E91E63"
-        android:centerColor="#C8E36791"
-        android:endColor="#FAA9A3"
+        android:startColor="@color/primary"
+        android:centerColor="@color/primaryLight"
+        android:endColor="@color/primaryLighter"
         android:angle="360" />
 
 </shape>

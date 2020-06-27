@@ -3,10 +3,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
-
+        android:id="@+id/card_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -27,15 +28,17 @@
 
 
                 <TextView
+                    android:id="@+id/amount_description_text_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/total_price"
+                    android:text="@string/amount_description"
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/text_view_amount_card"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="$2,280.00"
+                    android:text="$0.0"
                     android:textColor="#C8E91E63"
                     android:textSize="@dimen/price_text_large"
                     android:textStyle="bold" />
@@ -54,6 +57,7 @@
                 app:cardElevation="@dimen/card_elevation">
 
                 <RelativeLayout
+                    android:id="@+id/card_root_layout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/card_bg"
@@ -65,22 +69,41 @@
                         android:id="@+id/card_type_background"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:alpha="0.05"
+                        android:alpha="0.06"
                         android:scaleType="centerCrop"
                         android:src="@drawable/ic_paystack_logo"
                         android:tint="@color/white" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_8">
 
-                        <TextView
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:text="@string/paystack"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/card_digit_text_size" />
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/card_small_header"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="-8dp"
+                                android:text="@string/secured_by"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/card_text_small" />
+
+                            <TextView
+                                android:id="@+id/card_header"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/paystack"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/card_digit_text_size"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
 
                         <ImageView
                             android:id="@+id/card_type_image"
@@ -101,6 +124,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/card_number_description"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:letterSpacing="0.1"
@@ -128,6 +152,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/card_holder_description"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:letterSpacing="0.1"
@@ -160,6 +185,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/card_expiry_description"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:letterSpacing="0.1"
@@ -198,18 +224,36 @@
                     android:orientation="vertical"
                     android:paddingTop="@dimen/space_16">
 
-                    <TextView
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/space_8"
-                        android:text="@string/card_number"
-                        android:textAllCaps="false"
-                        android:textStyle="bold" />
+                        android:layout_marginBottom="@dimen/space_8">
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/card_number"
+                            android:textAllCaps="false"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/show_saved_cards"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:padding="@dimen/space_4"
+                            android:text="@string/saved_cards"
+                            android:textStyle="italic" />
+
+                    </RelativeLayout>
+
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/card_number_layout"
+                        android:id="@+id/edit_text_card_number_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        app:errorIconDrawable="@null"
                         app:hintEnabled="false">
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -217,9 +261,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/edit_text_bg"
-                            android:drawableStart="@drawable/ic_paystack_logo_input"
+                            android:drawableStart="@drawable/credit_card_30px"
                             android:drawableEnd="@drawable/ic_baseline_camera_alt_24"
-                            android:drawablePadding="@dimen/space_8"
+                            android:drawablePadding="@dimen/space_12"
                             android:gravity="center_vertical"
                             android:hint="@string/card_number_hint"
                             android:inputType="number"
@@ -252,6 +296,7 @@
                                 android:textStyle="bold" />
 
                             <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/edit_text_expiry_date_layout"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="@dimen/space_4"
@@ -292,6 +337,7 @@
                                 android:textStyle="bold" />
 
                             <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/edit_text_security_code_layout"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/space_4"
@@ -368,17 +414,38 @@
                     </RelativeLayout>
 
                     <Button
-                        android:id="@+id/pay_button"
+                        android:id="@+id/pay_button_card"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginTop="@dimen/space_16"
+                        android:layout_marginBottom="@dimen/space_8"
                         android:background="@drawable/button_bg"
                         android:letterSpacing="0.3"
-                        android:text="@string/pay_now"
+                        android:text="@string/pay"
                         android:textAllCaps="true"
                         android:textColor="@color/white"
                         android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/pay_button_alternative_card"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/space_16"
+                        android:layout_marginBottom="@dimen/space_8"
+                        android:gravity="center_horizontal"
+                        android:letterSpacing="0.1"
+                        android:text="@string/pay_with_bank_question"
+                        android:textStyle="italic" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_margin="@dimen/space_16"
+                        android:contentDescription="@string/paystack_logo"
+                        android:src="@drawable/secured_by_paystack" />
+
 
                 </LinearLayout>
 

@@ -3,10 +3,10 @@
     package="com.weylar.bunny">
 
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application>
-        <activity android:name=".autodetectcard.DetectCardActivity"/>
+        <activity android:name=".autodetectcard.DetectCardActivity" />
 
         <meta-data
             android:name="com.google.android.gms.vision.DEPENDENCIES"

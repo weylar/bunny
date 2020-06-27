@@ -7,7 +7,7 @@ import android.util.Log
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
-import java.util.regex.Pattern
+import com.google.android.material.textfield.TextInputLayout
 
 /**
  * Contains all edit text formatter utility methods
@@ -15,23 +15,25 @@ import java.util.regex.Pattern
  */
 object EditTextFormatter {
 
-    val CODE_PATTERN: Pattern = Pattern.compile("([0-9]{0,4})|([0-9]{4}-)+|([0-9]{4}-[0-9]{0,4})+")
-
 
     /**
      * Formats edittext text content into MM/YY formats
      */
-    fun EditText.formatEditTextExpiry(cardExpireText: TextView) {
+    fun EditText.formatEditTextExpiry(
+        cardExpireText: TextView, editTextLayout: TextInputLayout
+    ) {
         val tw = object : TextWatcher {
 
             override fun afterTextChanged(editable: Editable) {
-                if (editable.isNotEmpty() && editable.length % 3 === 0) {
+                //Remove previously set error message
+                editTextLayout.error = null
+                if (editable.isNotEmpty() && editable.length % 3 == 0) {
                     val c: Char = editable[editable.length - 1]
                     if ('/' == c) {
                         editable.delete(editable.length - 1, editable.length)
                     }
                 }
-                if (editable.isNotEmpty() && editable.length % 3 === 0) {
+                if (editable.isNotEmpty() && editable.length % 3 == 0) {
                     val c: Char = editable[editable.length - 1]
                     if (Character.isDigit(c) && TextUtils.split(
                             editable.toString(),
@@ -82,22 +84,48 @@ object EditTextFormatter {
 
     }
 
+    fun EditText.formatEditTextCVV(editTextLayout: TextInputLayout) {
+        val tw = object : TextWatcher {
+
+            override fun afterTextChanged(editable: Editable) {
+                //Remove previously set error message
+                editTextLayout.error = null
+
+
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, start: Int, removed: Int, added: Int) {
+
+            }
+        }
+        this.addTextChangedListener(tw)
+
+
+    }
+
     /**
      * Formats editText text content into **** **** ****
      */
     fun EditText.formatEditTextCardNumber(
         textView: TextView,
         cardTypeIcon: ImageView,
-        cardTypeIconBackground: ImageView
+        cardTypeIconBackground: ImageView,
+        editTextLayout: TextInputLayout
     ) {
         val tw = object : TextWatcher {
-            val space = ' '
 
             override fun afterTextChanged(s: Editable) {
                 textView.setCardNumberText(s.toString())
 
 
-                if (s.isNotEmpty() /*&& !CODE_PATTERN.matcher(s).matches()*/) {
+                if (s.isNotEmpty()) {
+                    //Remove previously set error message
+                    editTextLayout.error = null
+
                     val input: String = s.toString()
                     val numbersOnly: String = keepNumbersOnly(input)
                     val code: String = formatNumbersAsCode(numbersOnly)
@@ -105,125 +133,148 @@ object EditTextFormatter {
                     this@formatEditTextCardNumber.setText(code)
                     if (code.length % 5 == 0 || code.length == 24) {
                         this@formatEditTextCardNumber.setSelection(code.length - 1)
-                    }else{
+                    } else {
                         this@formatEditTextCardNumber.setSelection(code.length)
                     }
                     this@formatEditTextCardNumber.addTextChangedListener(this)
 
 
-                    when (CardType.detect(s.toString().replace(" ", ""))) {
-                        CardType.VERVE -> {
-                            this@formatEditTextCardNumber
-                                .setCompoundDrawablesWithIntrinsicBounds(
-                                    context.getDrawable(R.drawable.ic_verve_logo_input),
-                                    null,
-                                    null,
-                                    null
-                                )
-                            cardTypeIcon.setImageResource(R.drawable.ic_verve_logo)
-                            cardTypeIconBackground.setImageResource(R.drawable.ic_verve_logo)
-                        }
-                        CardType.VISA -> {
-                            this@formatEditTextCardNumber
-                                .setCompoundDrawablesWithIntrinsicBounds(
-                                    context.getDrawable(R.drawable.ic_visa_logo_input),
-                                    null,
-                                    null,
-                                    null
-                                )
-                            cardTypeIcon.setImageResource(R.drawable.ic_visa_logo)
-                            cardTypeIconBackground.setImageResource(R.drawable.ic_visa_logo)
-                        }
-                        CardType.MASTERCARD -> {
-                            cardTypeIcon.setImageResource(R.drawable.ic_mastercard_logo)
-                            cardTypeIconBackground.setImageResource(R.drawable.ic_mastercard_logo)
-                            this@formatEditTextCardNumber
-                                .setCompoundDrawablesWithIntrinsicBounds(
-                                    context.getDrawable(R.drawable.ic_mastercard_logo_input),
-                                    null,
-                                    null,
-                                    null
-                                )
-                        }
-
-                        CardType.UNKNOWN -> {
-                            cardTypeIcon.setImageResource(R.drawable.ic_paystack_logo)
-                            cardTypeIconBackground.setImageResource(R.drawable.ic_paystack_logo)
-                            this@formatEditTextCardNumber
-                                .setCompoundDrawablesWithIntrinsicBounds(
-                                    context.getDrawable(R.drawable.ic_paystack_logo_input),
-                                    null,
-                                    null,
-                                    null
-                                )
-                        }
-                        else -> {
-                            cardTypeIcon.setImageResource(R.drawable.ic_paystack_logo)
-                            cardTypeIconBackground.setImageResource(R.drawable.ic_paystack_logo)
-                            this@formatEditTextCardNumber
-                                .setCompoundDrawablesWithIntrinsicBounds(
-                                    context.getDrawable(R.drawable.ic_paystack_logo_input),
-                                    null,
-                                    null,
-                                    null
-                                )
-                        }
-                    }
+                    updateEditTextIcons(PayView.mIsCardCardEnabled, s, cardTypeIcon, cardTypeIconBackground)
 
                 }
             }
 
 
-                override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
+            override fun beforeTextChanged(
+                s: CharSequence?,
+                start: Int,
+                count: Int,
+                after: Int
+            ) {
 
-                }
-
-                override fun onTextChanged(
-                    p0: CharSequence?,
-                    start: Int,
-                    removed: Int,
-                    added: Int
-                ) {
-
-                }
             }
-            this.addTextChangedListener(tw)
+
+            override fun onTextChanged(
+                p0: CharSequence?,
+                start: Int,
+                removed: Int,
+                added: Int
+            ) {
+
+            }
         }
+        this.addTextChangedListener(tw)
+    }
 
-        private fun keepNumbersOnly(s: CharSequence): String {
-            return s.toString().replace("[^0-9]".toRegex(), "")
-        }
+    private fun EditText.updateEditTextIcons(
+        isCardCardEnabled: Boolean,
+        s: Editable,
+        cardTypeIcon: ImageView,
+        cardTypeIconBackground: ImageView
+    ) {
+        when (CardType.detect(s.toString().replace(" ", ""))) {
+            CardType.VERVE -> {
+                val drawable = context.getDrawable(R.drawable.verve)
+                drawable?.setBounds(0, 0, 90, 60)
+                val cameraIcon = context.getDrawable(R.drawable.ic_baseline_camera_alt_24)
+                cameraIcon?.setBounds(0, 0, 60, 60)
+                this.setCompoundDrawables(
+                        drawable, null,
+                        if (isCardCardEnabled) cameraIcon else null,
+                        null
+                    )
 
-        private fun formatNumbersAsCode(s: CharSequence): String {
-            var groupDigits = 0
-            var tmp = ""
-            for ((i, element) in s.withIndex()) {
-                tmp += element
-                ++groupDigits
-                if (groupDigits == 4 || i == 18) {
-                    tmp += " "
-                    groupDigits = 0
-                }
+                cardTypeIcon.setImageResource(R.drawable.ic_verve_logo)
+                cardTypeIconBackground.setImageResource(R.drawable.ic_verve_logo)
             }
-            return tmp
-        }
-
-
-        private fun TextView.setCardNumberText(data: String) {
-            var hash = ""
-            if (data.length < 19) {
-                for (x in 1..19 - data.length) {
-                    hash += "*"
-                    if (x % 4 == 0) {
-                        hash += " "
-                    }
-                }
+            CardType.VISA -> {
+                val drawable = context.getDrawable(R.drawable.visa)
+                drawable?.setBounds(0, 0, 90, 60)
+                val cameraIcon = context.getDrawable(R.drawable.ic_baseline_camera_alt_24)
+                cameraIcon?.setBounds(0, 0, 60, 60)
+                this.setCompoundDrawables(
+                        drawable, null,
+                        if (isCardCardEnabled) cameraIcon else null,
+                        null
+                    )
+                cardTypeIcon.setImageResource(R.drawable.ic_visa_logo)
+                cardTypeIconBackground.setImageResource(R.drawable.ic_visa_logo)
             }
-            this.text = data + hash
+            CardType.MASTERCARD -> {
+                cardTypeIcon.setImageResource(R.drawable.ic_mastercard_logo)
+                cardTypeIconBackground.setImageResource(R.drawable.ic_mastercard_logo)
+                val drawable = context.getDrawable(R.drawable.mastercard_40px)
+                val cameraIcon = context.getDrawable(R.drawable.ic_baseline_camera_alt_24)
+                cameraIcon?.setBounds(0, 0, 60, 60)
+                drawable?.setBounds(0, 0, 70, 70)
+                this.setCompoundDrawables(
+                        drawable, null,
+                        if (isCardCardEnabled) cameraIcon else null,
+                        null
+                    )
+            }
+
+            CardType.UNKNOWN -> {
+                cardTypeIcon.setImageResource(R.drawable.ic_paystack_logo)
+                cardTypeIconBackground.setImageResource(R.drawable.ic_paystack_logo)
+                val drawable = context.getDrawable(R.drawable.credit_card_30px)
+                val cameraIcon = context.getDrawable(R.drawable.ic_baseline_camera_alt_24)
+                cameraIcon?.setBounds(0, 0, 60, 60)
+                drawable?.setBounds(0, 0, 70, 70)
+                this.setCompoundDrawables(
+                        drawable, null,
+                        if (isCardCardEnabled) cameraIcon else null,
+                        null
+                    )
+
+            }
+            else -> {
+                cardTypeIcon.setImageResource(R.drawable.ic_paystack_logo)
+                cardTypeIconBackground.setImageResource(R.drawable.ic_paystack_logo)
+                val drawable = context.getDrawable(R.drawable.credit_card_30px)
+                val cameraIcon = context.getDrawable(R.drawable.ic_baseline_camera_alt_24)
+                cameraIcon?.setBounds(0, 0, 60, 60)
+                drawable?.setBounds(0, 0, 70, 70)
+                this.setCompoundDrawables(
+                        drawable, null,
+                        if (isCardCardEnabled) cameraIcon else null,
+                        null
+                    )
+            }
         }
     }
+
+    private fun keepNumbersOnly(s: CharSequence): String {
+        return s.toString().replace("[^0-9]".toRegex(), "")
+    }
+
+    private fun formatNumbersAsCode(s: CharSequence): String {
+        var groupDigits = 0
+        var tmp = ""
+        for ((i, element) in s.withIndex()) {
+            tmp += element
+            ++groupDigits
+            if (groupDigits == 4 || i == 18) {
+                tmp += " "
+                groupDigits = 0
+            }
+        }
+        return tmp
+    }
+
+
+    private fun TextView.setCardNumberText(data: String) {
+        var hash = ""
+        if (data.length < 19) {
+            for (x in 1..19 - data.length) {
+                hash += "X"
+                if (x % 4 == 0) {
+                    hash += " "
+                }
+            }
+        }
+        this.text = data + hash
+    }
+
+
+}
