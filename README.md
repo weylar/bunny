@@ -1,4 +1,6 @@
 # Bunny - Android PayStack UI Library
+[![API](https://img.shields.io/badge/API-21%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=21)
+[![](https://jitpack.io/v/weylar/bunny.svg)](https://jitpack.io/#weylar/bunny)
 ![Badge](screenshots/platform.svg)
 ### Screenshots
 ![Entry page](screenshots/selection_page.PNG)
@@ -32,7 +34,7 @@ allprojects {
 ```
 ### Gradle
 ```
- implementation 'com.github.weylar:bunny:0.0.1-beta'
+ implementation 'com.github.weylar:bunny:version'
 ```
 ## Usage
 Once imported in your project, a basic usage will be to add this  in your layout file: 
@@ -210,6 +212,23 @@ This works.
 
 ## Using this Library?
 You can give me a shout out on [Twitter](https://twitter.com/weylar_) 😉✨
+
+## License
+```
+  Copyright 2020 Idris Aminu Weylar
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+```
 
 
 
