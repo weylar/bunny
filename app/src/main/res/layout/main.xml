@@ -17,9 +17,8 @@
             app:cardBackground="@drawable/card_bg"
             app:cardContentColor="@color/white"
             app:payButtonBackground="@color/black"
-                app:payButtonText="Yahaha"
-
-                app:enableDetailSave="false"
+            app:payButtonText="Pay"
+            app:enableDetailSave="false"
             app:bunnyTheme="#000000"
             app:payButtonTextColor="@color/white"-->
 

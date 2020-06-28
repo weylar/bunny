@@ -5,7 +5,6 @@
 ![Bank payment](screenshots/bank_page.PNG)
 ![Card payment](screenshots/card_page.PNG)
 ![Saved cards](screenshots/saved_cards.PNG)
-![Scan page](screenshots/scan_page.PNG)
 
 ### What is Bunny ? 
 Bunny is a beautiful, easy-to-use, and highly customisable Paystack UI library for Android. It helps with quick integration into your PayStack Android project.
@@ -22,15 +21,18 @@ To use PayStack in your project, kindly follow this link [https://github.com/Pay
 ## Installation
 Add this to your root `build.gradle` of your project
 ```
-Code goes here
+allprojects {
+    repositories {
+        ...
+        jcenter()
+        maven { url 'https://jitpack.io' }
+        ...
+    }
+}
 ```
 ### Gradle
 ```
-Code goes here
-```
-### Maven
-```
-Code goes here
+ implementation 'com.github.weylar:bunny:1.0.0'
 ```
 ## Usage
 Once imported in your project, a basic usage will be to add this  in your layout file: 
@@ -92,29 +94,30 @@ payView.onPayClickListener(object : PayView.OnPayListener {
 
 
 ### Usage - Kotlin | Java
+
 #### Setters
-- `enableCardScan(Activity, Boolean)` -  This enables or disables card scan option. Default value is false.
 
 - `setBunnyTheme(Color)` - This determines the entire view theme. Automatically adjust the view colors to match with the specified in color. Note that if this is set, it overrides any color property set from xml on any view item. 
-
-- `setBanks(List)` - This is a compulsory field. It is used to attach list of bank names on spinner used during bank payment.
-
 - `setAmount(Float)` - Amount to be displayed on the payment page.
 - `setAmountColor(Color)` - Defines the amount text color.
 - `setPayButtonBackground(Drawable|Color)` - This defines the background property of the pay button. Can either be a custom drawable background or solid color.
 - `setPayButtonTextColor(Color)` - Defines the  pay button text color property.
 -  `setPayButtonText(String)` - Defines text to show on pay button.
+-  `enableDetailSave(Boolean)` -  Determines whether to show save card or bank details option. Default value is true.
+
+##### Card Payment
+- `enableCardScan(Activity, Boolean)` -  This enables or disables card scan option. Default value is false.
+- `setBanks(List)` - This is a compulsory field. It is used to attach list of bank names on spinner used during bank payment.
 -  `setCardBackground(Drawable|Color)` -  Defines the credit card view background. This can either be a solid color or a custom drawable background.
 -  `setCardContentColor(Color)` -  Defines the color of the view contents in the credit card view.
--  `enableDetailSave(Boolean)` -  Determines whether to show save card or bank details option. Default value is true.
 - `setCardNumber(String)` - Sets card number value on card number edit text view.
-- `setBankAccountNumber(String)` - Sets  account number value on edit text view.
-- `setDob(String)` -  Sets date of birth value on edit text view.
 - `setCardExpiryDate(String)` -  Sets expiry date value on edit text view.
 - `setCardCVV(String)` - Sets card value cvv on edit text view.
 -  `setCardHolderName(String)` - Sets card holder name value on edit text view.
 
-
+##### Bank Payment
+- `setBankAccountNumber(String)` - Sets  account number value on edit text view.
+- `setDob(String)` -  Sets date of birth value on edit text view.
 
 
 #### Getters
@@ -188,6 +191,9 @@ Bunny uses `Encrypted SharedPreference` to persist its saved details on the devi
 enableDetailSave(Boolean)
 ```
 Passing in `false`, `true` will otherwise enable it.
+
+### What Next?
+Check out this repo, App module for a complete integration with PayStack usage.
 
 ## Important Stuff To Note
 - When you set `bunnyTheme` ,  note that this will override any other color or background configuration in `XML`. To avoid this, you need to apply other changes through your code. Example: 

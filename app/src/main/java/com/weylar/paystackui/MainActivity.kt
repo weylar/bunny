@@ -2,6 +2,7 @@ package com.weylar.paystackui
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -18,6 +19,7 @@ import com.weylar.bunny.data.BankPayViewData
 import com.weylar.bunny.data.CardPayViewData
 
 class MainActivity : AppCompatActivity() {
+    private val LOG: String = "MainActivity"
     private lateinit var payView: PayView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,9 +28,11 @@ class MainActivity : AppCompatActivity() {
 
         payView = findViewById(R.id.pay_view)
         payView.enableCardScan(this, true)
-       // payView.setBunnyTheme(Color.BLACK)
-       // payView.setBanks(listOf("Access", "Uba"))
-        // payView.setAmount(100.0f)
+        payView.setBunnyTheme(Color.BLACK)
+        payView.setBanks(listOf("Access", "Uba"))
+         payView.setAmount(100.0f)
+
+        // These are complete list of invocable method calls.
        //  payView.setAmountColor(R.color.black)
         // payView.setPayButtonBackground(ActivityCompat.getDrawable(this, R.drawable.button_bg))
         // payView.setPayButtonTextColor(Color.YELLOW)
@@ -40,9 +44,9 @@ class MainActivity : AppCompatActivity() {
 
         payView.onPayClickListener(object : PayView.OnPayListener {
             override fun onBankPayListener(bankPayViewData: BankPayViewData) {
-                Log.i("Aminu", bankPayViewData.accountNumber)
-                Log.i("Aminu", bankPayViewData.bankName)
-                Log.i("Aminu", bankPayViewData.dateOfBirth)
+                Log.i(LOG, bankPayViewData.accountNumber)
+                Log.i(LOG, bankPayViewData.bankName)
+                Log.i(LOG, bankPayViewData.dateOfBirth)
             }
 
             override fun onCardPayListener(cardPayDataView: CardPayViewData) {
@@ -55,29 +59,29 @@ class MainActivity : AppCompatActivity() {
                     val charge = Charge()
                     charge.card = card
                     charge.amount = 200
-                    charge.email = "idrisaminu861@gmail.com"
+                    charge.email = "sample@hey.com"
 
                     PaystackSdk.chargeCard(
                         this@MainActivity,
                         charge,
                         object : Paystack.TransactionCallback {
                             override fun onSuccess(transaction: Transaction?) {
-                                Log.i("Aminu", "Successful transaction")
+                                Log.i(LOG, "Successful transaction")
                                 payView.hideLoadingSpinner()
                             }
 
                             override fun beforeValidate(transaction: Transaction?) {
-                                Log.i("Aminu", "Before validate is called")
+                                Log.i(LOG, "Before validate is called")
                             }
 
                             override fun onError(error: Throwable?, transaction: Transaction?) {
-                                Log.i("Aminu", "Error: " + error?.localizedMessage)
+                                Log.i(LOG, "Error: " + error?.localizedMessage)
                                 payView.hideLoadingSpinner()
                             }
 
                         })
                 } else {
-                    Log.i("Aminu", "It's not valid")
+                    Log.i(LOG, "It's not valid")
                 }
 
             }
