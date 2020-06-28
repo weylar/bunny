@@ -1,5 +1,5 @@
 # Bunny - Android PayStack UI Library
-
+![Badge](screenshots/platform.svg)
 ### Screenshots
 ![Entry page](screenshots/selection_page.PNG)
 ![Bank payment](screenshots/bank_page.PNG)
