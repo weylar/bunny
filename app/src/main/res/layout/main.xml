@@ -10,9 +10,7 @@
     <com.weylar.bunny.PayView
         android:id="@+id/pay_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-
-        app:bunnyTheme="#ffffff"/>
+        android:layout_height="match_parent" />
 
     <!--    app:amountDescription="@string/amount_description"
             app:amountColor="@color/colorAccent"

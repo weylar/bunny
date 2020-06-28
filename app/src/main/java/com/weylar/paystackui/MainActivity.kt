@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.main)
 
         payView = findViewById(R.id.pay_view)
-       // payView.enableCardScan(this, true)
+        payView.enableCardScan(this, true)
        // payView.setBunnyTheme(Color.BLACK)
        // payView.setBanks(listOf("Access", "Uba"))
         // payView.setAmount(100.0f)
