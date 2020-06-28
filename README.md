@@ -32,7 +32,7 @@ allprojects {
 ```
 ### Gradle
 ```
- implementation 'com.github.weylar:bunny:1.0.0'
+ implementation 'com.github.weylar:bunny:0.0.1-beta'
 ```
 ## Usage
 Once imported in your project, a basic usage will be to add this  in your layout file: 
