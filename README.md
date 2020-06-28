@@ -1,17 +1,17 @@
 # Bunny - Android PayStack UI Library
 
 ### Screenshots
-[Entry page](screenshots/selection_page.PNG)
-[Entry page](screenshots/bank_page.PNG)
-[Entry page](screenshots/card_page.PNG)
-[Entry page](screenshots/saved_cards.PNG)
-[Entry page](screenshots/scan_page.PNG)
+![Entry page](screenshots/selection_page.PNG)
+![Bank payment](screenshots/bank_page.PNG)
+![Card payment](screenshots/card_page.PNG)
+![Saved cards](screenshots/saved_cards.PNG)
+![Scan page](screenshots/scan_page.PNG)
 
 ### What is Bunny ? 
-Bunny is a beautiful, easy-to-use, and highly customisable Paystack UI library for Android. It helps with quick integeration into your PayStack Android project.
+Bunny is a beautiful, easy-to-use, and highly customisable Paystack UI library for Android. It helps with quick integration into your PayStack Android project.
 
 ### Why Bunny?
-Bunny is a  UI library that was built for faster integeration into your PayStack Android projects. With bunny basic setup, you are good to go. Not just that, it also support some highly functional usage like card scan support, automatic input validation, account details persistence, etc which is a great deal for usage and development experience.
+Bunny is a  UI library that was built for faster integration into your PayStack Android projects. With bunny basic setup, you are good to go. Not just that, it also support some highly functional usage like card scan support, automatic input validation, account details persistence, etc which is a great deal for usage and development experience.
 
 ###  Why PayStack?
 PayStack is currently one of the easiest and fastest way to receive payments. With their easy to use Android SDK, it gets your development experience easy and fast.
@@ -45,7 +45,7 @@ Then you will have to populate list of banks to be displayed when using bank pay
 val payView = findViewById(R.id.pay_view)
 payView.setBanks(listOf("AccessBank", "Uba"))
 ```
-That's pretty much all you need to use bunny. Bunny handles everything else you need to do manually including validating the user input, saving and retreiving saved account details and card scan.
+That's pretty much all you need to use bunny. Bunny handles everything else you need to do manually including validating the user input, saving and retrieving saved account details and card scan.
 
 ### Retrieving Card and Bank Input Data
 Get the input values from this callback when the user clicks on pay button or select from the list of previous card or banks. You don't have to worry about validation since this is being handled under the hood. The appropriate error message is displayed to the user. This callback only gets triggered if validation is successful, and you can be sure that you are getting only validated data.
@@ -183,7 +183,7 @@ data: Intent?) {
 }
 ```
 ### Card and Bank Details Persistent Support
-Bunny uses `Encrypted SharedPreference` to persist its saved details on the device. Although this is only supported on `API 23` and above, device lower than that uses the default `SharedPrefernce`  for its persistence. To get this fireup, you don't need any configuration, bunny does that for you by default, but to disable it you can invoke this method.
+Bunny uses `Encrypted SharedPreference` to persist its saved details on the device. Although this is only supported on `API 23` and above, device lower than that uses the default `SharedPrefernce`  for its persistence. To get this fire-up, you don't need any configuration, bunny does that for you by default, but to disable it you can invoke this method.
 ```
 enableDetailSave(Boolean)
 ```
