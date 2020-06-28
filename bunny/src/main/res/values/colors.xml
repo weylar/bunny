@@ -2,13 +2,13 @@
 <resources>
     <!--Bunny colors-->
 
-    <color name="primary">#C8E91E63</color>
-    <color name="primaryLight">#C8E36791</color>
+    <color name="primary">#E91E63</color>
+    <color name="primaryLight">#EA769D</color>
     <color name="primaryLighter">#FBA7A1</color>
     <color name="white">#ffffff</color>
     <color name="success">#4CAF50</color>
     <color name="faint_white">#86FFFFFF</color>
     <color name="darker_white">#65D6C9C9</color>
     <color name="black">#000000</color>
-    <color name="darker_gray">#65989292</color>
+    <color name="darker_gray">#757171</color>
 </resources>

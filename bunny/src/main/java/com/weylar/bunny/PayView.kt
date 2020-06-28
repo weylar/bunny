@@ -6,9 +6,11 @@ import android.app.Activity
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -20,6 +22,8 @@ import android.widget.*
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.core.graphics.ColorUtils
+import androidx.security.crypto.EncryptedSharedPreferences
+import androidx.security.crypto.MasterKeys
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import com.weylar.bunny.EditTextFormatter.formatEditTextCVV
@@ -44,13 +48,14 @@ const val SEPARATOR = "&"
 const val COLOR_ALPHA = 150
 
 
+@Suppress("PLUGIN_WARNING")
 class PayView @JvmOverloads constructor(
     private val mContext: Context,
     attrs: AttributeSet? = null,
-    private val defStyleAttr: Int = 0
+    defStyleAttr: Int = 0
 ) : LinearLayout(mContext, attrs, defStyleAttr) {
 
-    //TODO: Work on shared preference security
+
     //TODO: Write article on this
     //TODO: Create getters for all fields
     //TODO: Enable and disable bank or card payment
@@ -58,6 +63,21 @@ class PayView @JvmOverloads constructor(
      * Gets the card number edit text view.
      */
     var cardNumberEditText = edit_text_card_number
+
+    /**
+     * Gets the bank account edit text view.
+     */
+    var bankAccountEditText = edit_text_account_number
+
+    /**
+     * Gets bank account spinner view.
+     */
+    var bankSpinner = bank_spinner
+
+    /**
+     * Gets the bank date of birth edit text view.
+     */
+    var bankDobEditText = edit_text_dob
 
     /**
      * Gets the card expiry date edit text view.
@@ -74,12 +94,34 @@ class PayView @JvmOverloads constructor(
      */
     var cardHolder = edit_text_name_on_card
 
+
+
     private var dialogView: View
     private var dialog: BottomSheetDialog
-
     private var bankSpinnerData = listOf(context.getString(R.string.bank_spinner_placeholder))
     private var bankAdapter: ArrayAdapter<String>
+    private var sharedPreference = createSharedPreference()
 
+
+    /**
+     * This creates an encrypted sharedPreference instance.
+     *
+     * @return ShredPreference
+     */
+    private fun createSharedPreference(): SharedPreferences{
+        var sharedPreferences = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
+            sharedPreferences = EncryptedSharedPreferences.create(
+                MY_PREFS_NAME,
+                masterKeyAlias,
+                context,
+                EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+                EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+            )
+        }
+        return sharedPreferences
+    }
 
     companion object {
         /**
@@ -110,18 +152,6 @@ class PayView @JvmOverloads constructor(
         viewClick()
 
 
-    }
-
-    /**
-     * Set list of bank item on bank spinner view. To get this, you have to explicitly fetch the
-     * list of banks from paystack API here [https://api.paystack.co/bank?gateway=emandate&pay_with_bank=true],
-     * then call this method passing in the value.
-     *
-     * @param banks List of bank names.
-     */
-    fun setBanks(banks: List<String>) {
-        bankAdapter = ArrayAdapter(context, R.layout.bank_spinner_layout, banks)
-        bank_spinner.adapter = bankAdapter
     }
 
     @SuppressLint("SetTextI18n")
@@ -165,8 +195,17 @@ class PayView @JvmOverloads constructor(
                         ActivityCompat.getColor(mContext, R.color.white)
                     )
                 )
+                pay_button_bank.setTextColor(
+                    ta.getColor(
+                        R.styleable.PayView_payButtonTextColor,
+                        ActivityCompat.getColor(mContext, R.color.white)
+                    )
+                )
 
                 pay_button_card.background = ta.getDrawable(R.styleable.PayView_payButtonBackground)
+                    ?: ActivityCompat.getDrawable(mContext, R.drawable.button_bg)
+
+                pay_button_bank.background = ta.getDrawable(R.styleable.PayView_payButtonBackground)
                     ?: ActivityCompat.getDrawable(mContext, R.drawable.button_bg)
 
 
@@ -265,6 +304,9 @@ class PayView @JvmOverloads constructor(
                 0F
             ).toString()
 
+            val value = ta.getBoolean(R.styleable.PayView_enableDetailSave, true)
+            card_detail_save.visibility = if (value) View.VISIBLE else View.GONE
+            bank_detail_save.visibility = if (value) View.VISIBLE else View.GONE
 
         } finally {
             ta.recycle()
@@ -292,8 +334,10 @@ class PayView @JvmOverloads constructor(
 
         if (isColorDark(color)) {
             setCardContentColor(Color.WHITE)
+            setPayButtonTextColor(Color.WHITE)
         } else {
             setCardContentColor(Color.BLACK)
+            setPayButtonTextColor(Color.BLACK)
         }
 
     }
@@ -306,26 +350,98 @@ class PayView @JvmOverloads constructor(
      *
      * @param color Theme color to be used on all views.
      */
-    fun setBunnyTheme(color:Int){
+    fun setBunnyTheme(color: Int) {
         setTheme(color)
     }
 
     /**
-     * Sets card number
+     * Set list of bank item on bank spinner view. To get this, you have to explicitly fetch the
+     * list of banks from paystack API here [https://api.paystack.co/bank?gateway=emandate&pay_with_bank=true],
+     * then call this method passing in the value.
+     *
+     * @param banks List of bank names.
+     */
+    fun setBanks(banks: List<String>) {
+        bankAdapter = ArrayAdapter(context, R.layout.bank_spinner_layout, banks)
+        bank_spinner.adapter = bankAdapter
+    }
+
+    /**
+     * Sets card number.
      * @param cardNumber Card number
      */
-    fun setCardNumber(cardNumber: String) {
+    fun setCardNumber(cardNumber: String?) {
         edit_text_card_number.setText(cardNumber)
 
+    }
+    /**
+     * Sets bank account number.
+     * @param accountNumber Account number.
+     */
+    fun setBankAccountNumber(accountNumber: String) {
+        edit_text_account_number.setText(accountNumber)
+
+    }
+
+    /**
+     * Get card number.
+     * @return Returns the string representation of card number.
+     */
+    fun getCardNumber()  = edit_text_card_number.text.toString()
+
+    /**
+     * Get bank account number.
+     * @return Returns the string representation of bank account number.
+     */
+
+    fun getBankAccountNumber() = edit_text_account_number.text.toString()
+
+
+
+    /**
+     * Get selected bank name.
+     * @return Returns the string representation of selected bank name.
+     */
+    fun getBankName() = bank_spinner.selectedItem.toString()
+
+
+
+    /**
+     * Get user date of birth.
+     * @return Returns the string representation of date of birth
+     */
+    fun getDob() = edit_text_dob.text.toString()
+
+    /**
+     * Sets date of birth on edit text view.
+     *
+     * @param dob String value to set.
+     */
+    fun setDob(dob: String){
+        edit_text_dob.setText(dob)
     }
 
     /**
      * Sets card expiry date
      * @param cardExpiry Card expiry
      */
-    fun setCardExpiryDate(cardExpiry: String) {
+    fun setCardExpiryDate(cardExpiry: String?) {
         edit_text_expiry_date.setText(cardExpiry)
     }
+
+    /**
+     * Get the user input card expiry year in "YY".
+     * @return Year value in "YY".
+     *
+     */
+    fun getCardExpiryYear() = edit_text_expiry_date.text.toString().split("/")[1]
+
+    /**
+     * Get the user input card expiry month in "MM".
+     * @return Year value in "MM".
+     *
+     */
+    fun getCardExpiryMonth() = edit_text_expiry_date.text.toString().split("/")[0]
 
     /**
      * Sets card holder name
@@ -336,21 +452,47 @@ class PayView @JvmOverloads constructor(
     }
 
     /**
-     * Sets card CVV
-     * @param cvv Card CVV
+     * Gets the user input holder name.
+     *@return Card holder name.
+     */
+    fun getCardHolderName() = edit_text_name_on_card.text.toString()
+
+
+    /**
+     * Sets card CVV.
+     * @param cvv Card CVV.
      */
     fun setCardCVV(cvv: String) {
         edit_text_security_code.setText(cvv)
     }
 
     /**
-     * Sets payment amount to be displays on the page.
+     * Gets the user input card CVV number.
+     * @return Returns the CVV value.
+     *
+     */
+    fun getCardCVV() = edit_text_security_code.text.toString()
+
+    /**
+     * Sets payment amount to be displays on the both card and bank page. This is what the user
+     * will see when they are about to make payment.
      *@param amount to be paid.
      */
     @SuppressLint("SetTextI18n")
     fun setAmount(amount: Float) {
         text_view_amount_card.text = "\u20A6" + amount.toString()
         text_view_amount_bank.text = "\u20A6" + amount.toString()
+    }
+
+    /**
+     * This is usually displayed above the amount. Just a little description. By default it's set
+     * to "You are about to pay the sum of" .
+     *
+     * @param description Description to be set to.
+     */
+    fun setAmountDescription(description: String){
+        amount_description_text_view.text = description
+        amount_description_bank_text_view.text = description
     }
 
 
@@ -362,6 +504,7 @@ class PayView @JvmOverloads constructor(
      */
     fun setPayButtonBackground(background: Drawable?) {
         pay_button_card.background = background
+        pay_button_bank.background = background
 
     }
 
@@ -374,6 +517,7 @@ class PayView @JvmOverloads constructor(
      */
     fun setPayButtonTextColor(color: Int) {
         pay_button_card.setTextColor(color)
+        pay_button_bank.setTextColor(color)
     }
 
     /**
@@ -385,6 +529,7 @@ class PayView @JvmOverloads constructor(
      */
     fun setPayButtonText(text: String) {
         pay_button_card.text = text
+        pay_button_bank.text = text
     }
 
     /**
@@ -429,6 +574,16 @@ class PayView @JvmOverloads constructor(
         text_view_amount_bank.setTextColor(color)
     }
 
+    /**
+     * Enable for card or bank details savings.
+     *
+     * @param save True to enable otherwise false.
+     */
+    fun enableDetailSave(save: Boolean = true){
+        card_detail_save.visibility = if (save) View.VISIBLE else View.GONE
+        bank_detail_save.visibility = if (save) View.VISIBLE else View.GONE
+    }
+
 
     private fun formatExpiryEditTextContent() {
 
@@ -445,6 +600,12 @@ class PayView @JvmOverloads constructor(
 
     }
 
+    /**
+     * Enable support for card scanning.
+     *
+     * @param activity Activity of the calling view.
+     * @param isEnabled True to enable otherwise false.
+     */
     fun enableCardScan(activity: Activity, isEnabled: Boolean) {
         mActivity = activity
         mIsCardCardEnabled = isEnabled
@@ -496,11 +657,14 @@ class PayView @JvmOverloads constructor(
 
     }
 
+    /**
+     * Save card details using the SharedPreference. Implements encrypted shared preference for
+     * API device above 23.
+     *
+     */
     private fun saveCardState() {
-        val sharedPreferences = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-
-        val set = sharedPreferences.getStringSet(CARD_DETAIL_LIST, null)
+        val editor = sharedPreference.edit()
+        val set = sharedPreference.getStringSet(CARD_DETAIL_LIST, null)
         val newSet = mutableSetOf<String>()
         val value = edit_text_card_number.text.toString() +
                 SEPARATOR + edit_text_expiry_date.text.toString() +
@@ -516,10 +680,8 @@ class PayView @JvmOverloads constructor(
     }
 
     private fun saveBankState() {
-        val sharedPreferences = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-
-        val set = sharedPreferences.getStringSet(BANK_DETAIL_LIST, null)
+        val editor = sharedPreference.edit()
+        val set = sharedPreference.getStringSet(BANK_DETAIL_LIST, null)
         val newSet = mutableSetOf<String>()
         val value = bank_spinner.selectedItem.toString() +
                 SEPARATOR + edit_text_account_number.text.toString() +
@@ -604,7 +766,7 @@ class PayView @JvmOverloads constructor(
                 context.getString(R.string.select_bank_error_message),
                 Snackbar.LENGTH_LONG
             )
-            snack.setAction("Ok"){
+            snack.setAction("Ok") {
                 snack.dismiss()
             }
             snack.setActionTextColor(Color.WHITE)
@@ -728,6 +890,9 @@ class PayView @JvmOverloads constructor(
             showPreviousCards(onPayListener)
         }
 
+        show_saved_cards.visibility =
+            if (sharedPreference.contains(CARD_DETAIL_LIST)) View.VISIBLE else View.GONE
+
         // Trigger when user selects pay with bank option from the first view.
         pay_with_bank.setOnClickListener {
             view_flipper.inAnimation = AnimationUtils.loadAnimation(context, R.anim.slide_in_right)
@@ -739,6 +904,8 @@ class PayView @JvmOverloads constructor(
         show_saved_banks.setOnClickListener {
             showPreviousBanks(onPayListener)
         }
+        show_saved_banks.visibility =
+            if (sharedPreference.contains(BANK_DETAIL_LIST)) View.VISIBLE else View.GONE
 
     }
 
@@ -813,7 +980,8 @@ class PayView @JvmOverloads constructor(
                 }
 
 
-                childView.findViewById<ImageView>(R.id.card_type_image).setImageResource(R.drawable.ic_bank_svgrepo_com)
+                childView.findViewById<ImageView>(R.id.card_type_image)
+                    .setImageResource(R.drawable.ic_bank_svgrepo_com)
                 childView.findViewById<TextView>(R.id.card_number).text =
                     values[1].formatPreviousCardNumber()
 
@@ -874,7 +1042,7 @@ class PayView @JvmOverloads constructor(
      *
      * @param animation Sets whether or not to animate while dismissing progress. Default value is true
      */
-    fun dismissLoadingSpinner(animation: Boolean = true) {
+    fun hideLoadingSpinner(animation: Boolean = true) {
         dialog.dismissWithAnimation = animation
         dialog.dismiss()
     }

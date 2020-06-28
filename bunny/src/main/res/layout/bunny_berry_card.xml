@@ -262,7 +262,6 @@
                             android:layout_height="wrap_content"
                             android:background="@drawable/edit_text_bg"
                             android:drawableStart="@drawable/credit_card_30px"
-                            android:drawableEnd="@drawable/ic_baseline_camera_alt_24"
                             android:drawablePadding="@dimen/space_12"
                             android:gravity="center_vertical"
                             android:hint="@string/card_number_hint"
@@ -364,6 +363,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/space_24"
+                        android:layout_marginBottom="@dimen/space_24"
                         android:orientation="vertical">
 
                         <TextView
@@ -394,9 +394,9 @@
                     </LinearLayout>
 
                     <RelativeLayout
+                        android:id="@+id/card_detail_save"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/space_24">
+                        android:layout_height="wrap_content">
 
                         <TextView
                             android:layout_width="wrap_content"

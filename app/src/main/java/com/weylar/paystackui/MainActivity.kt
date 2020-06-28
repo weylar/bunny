@@ -25,16 +25,18 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.main)
 
         payView = findViewById(R.id.pay_view)
-        payView.enableCardScan(this, true)
+       // payView.enableCardScan(this, true)
+       // payView.setBunnyTheme(Color.BLACK)
        // payView.setBanks(listOf("Access", "Uba"))
-
-        // payView.setAmount(100.0)
-        // payView.setAmountColor(R.color.black)
+        // payView.setAmount(100.0f)
+       //  payView.setAmountColor(R.color.black)
         // payView.setPayButtonBackground(ActivityCompat.getDrawable(this, R.drawable.button_bg))
         // payView.setPayButtonTextColor(Color.YELLOW)
         // payView.setPayButtonText("Hello")
         // payView.setCardBackground(ActivityCompat.getDrawable(this, R.drawable.card_bg))
         // payView.setCardContentColor(ActivityCompat.getColor(this, R.color.white))
+        // payView.enableDetailSave(false)
+
 
         payView.onPayClickListener(object : PayView.OnPayListener {
             override fun onBankPayListener(bankPayViewData: BankPayViewData) {
@@ -61,7 +63,7 @@ class MainActivity : AppCompatActivity() {
                         object : Paystack.TransactionCallback {
                             override fun onSuccess(transaction: Transaction?) {
                                 Log.i("Aminu", "Successful transaction")
-                                payView.dismissLoadingSpinner()
+                                payView.hideLoadingSpinner()
                             }
 
                             override fun beforeValidate(transaction: Transaction?) {
@@ -70,7 +72,7 @@ class MainActivity : AppCompatActivity() {
 
                             override fun onError(error: Throwable?, transaction: Transaction?) {
                                 Log.i("Aminu", "Error: " + error?.localizedMessage)
-                                payView.dismissLoadingSpinner()
+                                payView.hideLoadingSpinner()
                             }
 
                         })
@@ -90,7 +92,7 @@ class MainActivity : AppCompatActivity() {
         when (requestCode) {
             SCAN_REQUEST_CODE -> {
                 if (resultCode == Activity.RESULT_OK) {
-                    payView.setCardNumber(data!!.getStringExtra(CARD_NUMBER)!!)
+                    payView.setCardNumber(data!!.getStringExtra(CARD_NUMBER))
                     payView.setCardExpiryDate(data.getStringExtra(CARD_EXPIRY_DATE)!!)
 
 

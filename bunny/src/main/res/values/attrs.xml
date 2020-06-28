@@ -10,6 +10,7 @@
         <attr name="cardBackground" format="reference"/>
         <attr name="cardContentColor" format="color"/>
         <attr name="bunnyTheme" format="color"/>
+        <attr name="enableDetailSave" format="boolean"/>
     </declare-styleable>
 
 </resources>

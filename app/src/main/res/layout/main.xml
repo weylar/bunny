@@ -11,15 +11,18 @@
         android:id="@+id/pay_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:amount="200.0"
-        app:bunnyTheme="#000000"/>
+
+        app:bunnyTheme="#ffffff"/>
 
     <!--    app:amountDescription="@string/amount_description"
             app:amountColor="@color/colorAccent"
             app:cardBackground="@drawable/card_bg"
             app:cardContentColor="@color/white"
             app:payButtonBackground="@color/black"
-            app:amountColor="@color/black"
+                app:payButtonText="Yahaha"
+
+                app:enableDetailSave="false"
+            app:bunnyTheme="#000000"
             app:payButtonTextColor="@color/white"-->
 
 
