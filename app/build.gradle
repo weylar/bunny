@@ -38,6 +38,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'co.paystack.android:paystack:3.0.18'
    // implementation project(':bunny')
-    implementation 'com.github.weylar:bunny:1.0.0'
+    implementation 'com.github.weylar:bunny:0.0.1-beta'
 
 }
