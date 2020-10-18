@@ -52,7 +52,7 @@ payView.setBanks(listOf("AccessBank", "Uba"))
 That's pretty much all you need to use bunny. Bunny handles everything else you need to do manually including validating the user input, saving and retrieving saved account details and card scan.
 
 ### Retrieving Card and Bank Input Data
-Get the input values from this callback when the user clicks on pay button or select from the list of previous card or banks. You don't have to worry about validation since this is being handled under the hood. The appropriate error message is displayed to the user. This callback only gets triggered if validation is successful, and you can be sure that you are getting only validated data.
+Get the input values from this callback when the user clicks on pay button or select from the list of previous cards or banks. You don't have to worry about validation since this is being handled under the hood. The appropriate error message is displayed to the user. This callback only gets triggered if validation is successful, and you can be sure that you are getting only validated data.
 ```
 payView.onPayClickListener(object : PayView.OnPayListener {  
     override fun onBankPayListener(bankPayViewData: BankPayViewData) { 
