@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import co.paystack.android.Paystack
 import co.paystack.android.PaystackSdk
 import co.paystack.android.Transaction
+import co.paystack.android.exceptions.CardException
 import co.paystack.android.model.Card
 import co.paystack.android.model.Charge
 import com.weylar.bunny.PayView
@@ -54,6 +55,7 @@ class MainActivity : AppCompatActivity() {
                     cardPayDataView.cardNumber, cardPayDataView.cardExpiryMonth,
                     cardPayDataView.cardExpiryYear, cardPayDataView.cardCVV
                 )
+
                 if (card.isValid) {
                     payView.showLoadingSpinner()
                     val charge = Charge()
